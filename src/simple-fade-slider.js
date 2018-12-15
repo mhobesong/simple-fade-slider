@@ -1,6 +1,12 @@
 function FadeSlider(){
 	this.id = (new Date()).getTime();
 	this.listElementId = arguments[0];
+
+	if (arguments.length > 1)
+		this.delay = parseInt(arguments[1]);
+	else
+		this.delay = 3000;
+
 	this.listElement = document.getElementById(this.listElementId);
 	this.images = this.listElement.querySelectorAll('li img');
 	this.createSlider();
@@ -87,6 +93,15 @@ FadeSlider.prototype.createSlider = function(){
 	prevButton.appendChild(buttonText);
 	prevButton.addEventListener('click',function(){instance.prevImage()});
 	document.getElementById('fade-slider-'+this.id).appendChild(prevButton);
+
+	slideshowButton = document.createElement('span');
+	slideshowButton.setAttribute('class','fade-slider-slideshow');
+	slideshowButton.setAttribute('style','color: #fff;position: absolute;left:41%;bottom:10px;padding: 5px;border: solid 1px; cursor:pointer;border-radius: 100px 100px 100px 100px;font-family:sans-serif');
+	buttonText = document.createTextNode('O Slider-show');
+	buttonText.fontSize = 'bolder';
+	slideshowButton.appendChild(buttonText);
+	slideshowButton.addEventListener('click',function(){instance.startSlideShow()});
+	document.getElementById('fade-slider-'+this.id).appendChild(slideshowButton);
 };
 
 FadeSlider.prototype.showImage = function(imageIndex) {
@@ -96,14 +111,12 @@ FadeSlider.prototype.showImage = function(imageIndex) {
 	for(var i=0; i<images.length; i++){
 		if (i == imageIndex){
 			images[i].style.display = 'block';
-			//imageContainers[i].style.display = 'block';
 			this.fadein(images[i],imageContainers[i]);
 			imageContainers[i].style.position = 'static';
 			imageContainers[i].style.top = '';
 		}
 		else{
 			images[i].style.display = 'none';
-			//imageContainers[i].style.display = 'none';
 			this.fadeout(images[i],imageContainers[i]);
 			imageContainers[i].style.position = 'absolute';
 			imageContainers[i].style.top = '0px';
@@ -160,10 +173,17 @@ FadeSlider.prototype.fullScreen = function(imageIndex) {
 		elem.msRequestFullscreen();
 	}
 
+};
+
+FadeSlider.prototype.startSlideShow = function() {
 	var _nextImage = this.nextImage.bind(this);
 	clearInterval(this.timer);
-		this.timer = setInterval(_nextImage,3000);
-};
+	this.timer = setInterval(_nextImage,this.delay);
+}
+
+FadeSlider.prototype.stopSlideShow = function() {
+	clearInterval(this.timer);
+}
 
 FadeSlider.prototype.nextImage = function() {
 	var imageCount = document.querySelectorAll('#fade-slider-'+this.id+'.fade-slider .fade-slider-images .fade-slider-image').length;
