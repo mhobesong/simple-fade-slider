@@ -18,11 +18,16 @@ FadeSlider.prototype.createSlider = function(){
 	var slider = document.createElement('div');
 	slider.setAttribute('class','fade-slider');
 	slider.setAttribute('id','fade-slider-'+this.id);
+	slider.style.position = 'absolute';
+	slider.style.display = 'table';
+	slider.style.left = '-'+(3*window.outerWidth)+'px';
 	this.listElement.parentNode.insertBefore(slider, this.listElement.nextSibling);	
 
 	sliderImages = document.createElement('div');
 	sliderImages.setAttribute('class','fade-slider-images');
 	sliderImages.style.position = 'relative';
+	sliderImages.style.display = 'table-cell';
+	sliderImages.style.verticalAlign = 'middle';
 	slider.appendChild(sliderImages);
 
 	for(var i=0; i<this.images.length; i++){
@@ -33,16 +38,20 @@ FadeSlider.prototype.createSlider = function(){
 		this.images[i].setAttribute('fade-slider-index', i);
 		sliderImageDiv = document.createElement('div');
 		sliderImageDiv.setAttribute('class','fade-slider-image');
-		sliderImageDiv.style.display = 'none';
-		sliderImageDiv.style.position = 'absolute';
-		sliderImageDiv.style.top = '0px';
+		sliderImageDiv.style.marginLeft = 'auto';
+		sliderImageDiv.style.marginRight = 'auto';
 
 		if (i==0){
 			sliderImageDiv.style.display = 'block';
 			sliderImageDiv.style.position = 'static';
 			sliderImageDiv.style.top = '';
+		}else{
+			sliderImageDiv.style.display = 'none';
+			sliderImageDiv.style.position = 'absolute';
+			sliderImageDiv.style.top = '0px';
 		}
-		sliderImageDiv.style.width = '70%';
+
+		sliderImageDiv.style.width = '80%';
 		sliderImageDiv.appendChild(img);
 		sliderImages.appendChild(sliderImageDiv);
 		var instance = this;
@@ -75,7 +84,6 @@ FadeSlider.prototype.showImage = function(imageIndex) {
 FadeSlider.prototype.fullScreen = function(imageIndex) {
 	this.showImage(imageIndex);
 	var elem = document.getElementById('fade-slider-'+this.id);
-	console.log(imageIndex);
 	if (elem.requestFullscreen) {
 		elem.requestFullscreen();
 	} else if (elem.mozRequestFullScreen) { /* Firefox */

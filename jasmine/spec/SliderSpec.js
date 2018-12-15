@@ -1,10 +1,15 @@
+var slider;
 describe("When slider is initialized", function() {
-
-	var slider;
-
 	beforeEach(function() {
 		if(typeof slider == 'undefined')
 			slider = new FadeSlider('list');
+	});
+	
+
+	it("should be out of user's view port", function() {
+		var elmt = document.querySelector('#fade-slider-'+slider.id);
+		expect(elmt.style.position).toEqual('absolute');
+		expect(elmt.style.left).toEqual('-'+(3*window.outerWidth)+'px');
 	});
 
 	it("should hide other images but the first one", function() {
@@ -25,7 +30,7 @@ describe("When slider is initialized", function() {
 			expect(elmt.style.width).toEqual('100%');
 		});
 		elmts2.forEach(function(elmt){
-			expect(elmt.style.width).toEqual('70%');
+			expect(elmt.style.width).toEqual('80%');
 		});
 	});
 
@@ -63,7 +68,6 @@ describe("When slider is initialized", function() {
 });
 
 describe("image", function() {
-	var slider;
 	beforeEach(function() {
 		if(typeof slider == 'undefined')
 			slider = new FadeSlider('list');
@@ -80,65 +84,24 @@ describe("image", function() {
 				expect(elmt.style.display).toEqual('none');
 		}
 	});
+
+	it("should be vertically centered", function() {
+		slider.showImage(3);
+		var sliderElm = document.querySelector('#fade-slider-'+slider.id+'.fade-slider');
+		var elmts = document.querySelectorAll('#fade-slider-'+slider.id+'.fade-slider .fade-slider-images .fade-slider-images');
+		expect(sliderElm.style.display).toEqual('table');
+		for(var i=0; i<elmts.length; i++){
+			expect(elmts[i].style.display).toEqual('table-cell');
+			expect(elmts[i].style.verticalAlign).toEqual('middle');
+		}
+	});
+
+	it("should be horizontally centered", function() {
+		slider.showImage(3);
+		var elmts = document.querySelectorAll('#fade-slider-'+slider.id+'.fade-slider .fade-slider-images .fade-slider-image');
+		for(var i=0; i<elmts.length; i++){
+			expect(elmts[i].style.marginLeft).toEqual('auto');
+			expect(elmts[i].style.marginRight).toEqual('auto');
+		}
+	});
 });
-
-/*
-describe("Player", function() {
-  var player;
-  var song;
-
-  beforeEach(function() {
-    player = new Player();
-    song = new Song();
-  });
-
-  it("should be able to play a Song", function() {
-    player.play(song);
-    expect(player.currentlyPlayingSong).toEqual(song);
-
-    //demonstrates use of custom matcher
-    expect(player).toBePlaying(song);
-  });
-
-  describe("when song has been paused", function() {
-    beforeEach(function() {
-      player.play(song);
-      player.pause();
-    });
-
-    it("should indicate that the song is currently paused", function() {
-      expect(player.isPlaying).toBeFalsy();
-
-      // demonstrates use of 'not' with a custom matcher
-      expect(player).not.toBePlaying(song);
-    });
-
-    it("should be possible to resume", function() {
-      player.resume();
-      expect(player.isPlaying).toBeTruthy();
-      expect(player.currentlyPlayingSong).toEqual(song);
-    });
-  });
-
-  // demonstrates use of spies to intercept and test method calls
-  it("tells the current song if the user has made it a favorite", function() {
-    spyOn(song, 'persistFavoriteStatus');
-
-    player.play(song);
-    player.makeFavorite();
-
-    expect(song.persistFavoriteStatus).toHaveBeenCalledWith(true);
-  });
-
-  //demonstrates use of expected exceptions
-  describe("#resume", function() {
-    it("should throw an exception if song is already playing", function() {
-      player.play(song);
-
-      expect(function() {
-        player.resume();
-      }).toThrowError("song is already playing");
-    });
-  });
-});
-*/
