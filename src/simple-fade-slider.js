@@ -174,7 +174,6 @@ FadeSlider.prototype.fullScreen = function(imageIndex) {
 	}
 
 	this.stopSlideShow();
-
 };
 
 FadeSlider.prototype.startSlideShow = function() {
@@ -191,12 +190,12 @@ FadeSlider.prototype.nextImage = function() {
 	var imageCount = document.querySelectorAll('#fade-slider-'+this.id+'.fade-slider .fade-slider-images .fade-slider-image').length;
 	var currentImage = this.activeImage;
 	var index = (++currentImage >= imageCount)?0:currentImage;
-	this.fullScreen(index);
+	this.showImage(index);
 };
 
 FadeSlider.prototype.prevImage = function() {
 	var imageCount = document.querySelectorAll('#fade-slider-'+this.id+'.fade-slider .fade-slider-images .fade-slider-image').length;
 	var currentImage = this.activeImage;
 	var index = (--currentImage < 0)?(--imageCount):currentImage;
-	this.fullScreen(index);
+	this.showImage(index);
 };
