@@ -173,6 +173,8 @@ FadeSlider.prototype.fullScreen = function(imageIndex) {
 		elem.msRequestFullscreen();
 	}
 
+	this.stopSlideShow();
+
 };
 
 FadeSlider.prototype.startSlideShow = function() {
