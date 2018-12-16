@@ -12,9 +12,9 @@ new FadeSlider(domElemID,[options]);
 ```
 `domElemID` *(String)* ID of list tag
 
-`options ` *(Object)* 
+`delay ` *(Number)*  Delay in miliseconds befor next image transition
 
-### Basic usage example
+### Usage example 1
 
 #### HTML
 ```
@@ -29,7 +29,7 @@ new FadeSlider(domElemID,[options]);
 ```
 new FadeSlider('mySlider');
 ```
-### Advanced usage example
+### Usage example 2
 #### HTML
 ```
 <ul id="mySlider">
@@ -41,9 +41,5 @@ new FadeSlider('mySlider');
 ```
 #### JavaScript
 ```
-new FadeSlider('mySlider'{delay:2000, transitionLength:1000});
+new FadeSlider('mySlider',2000);
 ```
-### Options
-`delay` *(Number)* Image display delay in miliseconds
-
-`transitionLength` *(Number0* Transition speed in miliseconds

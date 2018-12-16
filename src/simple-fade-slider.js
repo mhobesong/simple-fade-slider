@@ -2,13 +2,9 @@ function FadeSlider(){
 	this.id = (new Date()).getTime();
 	this.listElementId = arguments[0];
 
-	this.options = {delay:2000,transitionLength:50}
-
 	if (arguments.length > 1){
-		if(typeof arguments[1].delay != 'undefined')
-			this.options.delay = arguments[1].delay;
-		if(typeof arguments[1].transitionLength != 'undefined')
-			this.options.transitionLength = arguments[1].transitionLength;
+		if(typeof arguments[1] != 'undefined')
+			this.delay = arguments[1];
 	}
 
 	this.listElement = document.getElementById(this.listElementId);
@@ -16,7 +12,7 @@ function FadeSlider(){
 	this.createSlider();
 };
 
-FadeSlider.prototype.options;
+FadeSlider.prototype.delay = 2000;
 
 FadeSlider.prototype.id;
 
@@ -150,7 +146,7 @@ FadeSlider.prototype.fadeout = function(img,container){
 				opacity -= 0.1;
 				img.style.opacity = opacity;
 			}
-		},this.options.transitionLength);	
+		},50);	
 	}
 };
 
@@ -169,7 +165,7 @@ FadeSlider.prototype.fadein = function(img,container){
 				opacity += 0.1;
 				img.style.opacity = opacity;
 			}
-		},this.options.transitionLength);	
+		},50);	
 	}
 };
 
@@ -194,7 +190,7 @@ FadeSlider.prototype.startSlideShow = function() {
 	if (button.innerHTML == 'Play'){
 		var _nextImage = this.nextImage.bind(this);
 		clearInterval(this.timer);
-		this.timer = setInterval(_nextImage,this.options.delay);
+		this.timer = setInterval(_nextImage,this.delay);
 		document.querySelector('#fade-slider-'+this.id+' .fade-slider-slideshow').innerHTML = 'Stop';
 	}else{
 		this.stopSlideShow();
