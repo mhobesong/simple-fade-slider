@@ -83,7 +83,7 @@ FadeSlider.prototype.createSlider = function(){
 
 	nextButton = document.createElement('span');
 	nextButton.setAttribute('class','fade-slider-next');
-	nextButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-right: 10px;right: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 0px 30px 30px 0px;background-color:#000;opacity:0.5');
+	nextButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-right: 10px;right: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 0px 30px 30px 0px;background-color:#000;opacity:0.5;font-size:12px;font-family:sans-serif');
 	nextButton.addEventListener('click',function(){instance.nextImage();});
 	var label = document.createTextNode('Next');
 	nextButton.appendChild(label);
@@ -91,7 +91,7 @@ FadeSlider.prototype.createSlider = function(){
 
 	prevButton = document.createElement('span');
 	prevButton.setAttribute('class','fade-slider-prev');
-	prevButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-left: 10px;left: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 30px 0px 0px 30px;background-color:#000;opacity:0.5');
+	prevButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-left: 10px;left: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 30px 0px 0px 30px;background-color:#000;opacity:0.5;font-size:12px;font-family:sans-serif;filter:alpha(opacity=50)');
 	prevButton.addEventListener('click',function(){instance.prevImage()});
 	label = document.createTextNode('Prev');
 	prevButton.appendChild(label);
@@ -99,16 +99,24 @@ FadeSlider.prototype.createSlider = function(){
 
 	slideshowButton = document.createElement('span');
 	slideshowButton.setAttribute('class','fade-slider-slideshow');
-	slideshowButton.setAttribute('style','color: #fff;position: absolute;left:47%;bottom:10px;padding: 5px;border: solid 1px; cursor:pointer;font-family:sans-serif;background-color:#000;opacity:0.5');
+	slideshowButton.setAttribute('style','color: #fff;position: absolute;left:47%;bottom:10px;padding: 5px;border: solid 1px; cursor:pointer;background-color:#000;opacity:0.5;font-size:12px;filter:alpha(opacity=50);font-family:sans-serif');
 	buttonText = document.createTextNode('Play');
 	buttonText.fontSize = 'bolder';
 	slideshowButton.appendChild(buttonText);
 	slideshowButton.addEventListener('click',function(){instance.startSlideShow()});
 	document.getElementById('fade-slider-'+this.id).appendChild(slideshowButton);
+
+	ratioDisplay = document.createElement('span');
+	ratioDisplay.setAttribute('class','fade-slider-ratiodisplay');
+	ratioDisplay.setAttribute('style','color: #fff;position: absolute;left:60%;bottom:10px;padding: 5px;cursor:pointer;background-color:#000;opacity:0.5;font-size:12px;filter:alpha(opacity=50);font-family:sans-serif');
+	ratioDisplay.addEventListener('click',function(){instance.startSlideShow()});
+	document.getElementById('fade-slider-'+this.id).appendChild(ratioDisplay);
 };
 
 FadeSlider.prototype.showImage = function(imageIndex) {
+
 	var images = document.querySelectorAll('#fade-slider-'+this.id+'.fade-slider .fade-slider-images .fade-slider-image img');
+
 	var imageContainers = document.querySelectorAll('#fade-slider-'+this.id+'.fade-slider .fade-slider-images .fade-slider-image');
 
 	for(var i=0; i<images.length; i++){
@@ -126,6 +134,8 @@ FadeSlider.prototype.showImage = function(imageIndex) {
 		}
 	}
 	this.activeImage = imageIndex;
+
+	document.querySelector('#fade-slider-'+this.id+' .fade-slider-ratiodisplay').innerHTML = ++imageIndex+'/'+this.images.length;
 }
 
 FadeSlider.prototype.fadeout = function(img,container){
