@@ -2,20 +2,25 @@ function FadeSlider(){
 	this.id = (new Date()).getTime();
 	this.listElementId = arguments[0];
 
-	if (arguments.length > 1)
-		this.delay = parseInt(arguments[1]);
-	else
-		this.delay = 3000;
+	this.options = {delay:2000,transitionLength:50}
+
+	if (arguments.length > 1){
+		if(typeof arguments[1].delay != 'undefined')
+			this.options.delay = arguments[1].delay;
+		if(typeof arguments[1].transitionLength != 'undefined')
+			this.options.transitionLength = arguments[1].transitionLength;
+	}
 
 	this.listElement = document.getElementById(this.listElementId);
 	this.images = this.listElement.querySelectorAll('li img');
 	this.createSlider();
 };
 
+FadeSlider.prototype.options;
+
 FadeSlider.prototype.id;
 
 FadeSlider.prototype.activeImage;
-
 
 FadeSlider.prototype.listElementId;
 
@@ -78,26 +83,24 @@ FadeSlider.prototype.createSlider = function(){
 
 	nextButton = document.createElement('span');
 	nextButton.setAttribute('class','fade-slider-next');
-	nextButton.setAttribute('style','color: #fff;position: absolute;margin-right: 10px;right: 10px;bottom: 50%;padding: 5px;border: solid 1px;border-radius: 5px;font-weight: bold;font-size: 2em; cursor:pointer;border-radius: 0px 100px 0px 0px;');
-	buttonText = document.createTextNode('>');
-	buttonText.fontSize = 'bolder';
-	nextButton.appendChild(buttonText);
+	nextButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-right: 10px;right: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 0px 30px 30px 0px;background-color:#000;opacity:0.5');
 	nextButton.addEventListener('click',function(){instance.nextImage();});
+	var label = document.createTextNode('Next');
+	nextButton.appendChild(label);
 	document.getElementById('fade-slider-'+this.id).appendChild(nextButton);
 
 	prevButton = document.createElement('span');
 	prevButton.setAttribute('class','fade-slider-prev');
-	prevButton.setAttribute('style','color: #fff;position: absolute;margin-left: 10px;left: 10px;bottom: 50%;padding: 5px;border: solid 1px;border-radius: 5px;font-weight: bold;font-size: 2em; cursor:pointer;border-radius: 100px 0px 0px 0px;');
-	buttonText = document.createTextNode('<');
-	buttonText.fontSize = 'bolder';
-	prevButton.appendChild(buttonText);
+	prevButton.setAttribute('style','padding:5px;color: #fff;position: absolute;margin-left: 10px;left: 1%;bottom: 12px;border: solid 1px;cursor:pointer;border-radius: 30px 0px 0px 30px;background-color:#000;opacity:0.5');
 	prevButton.addEventListener('click',function(){instance.prevImage()});
+	label = document.createTextNode('Prev');
+	prevButton.appendChild(label);
 	document.getElementById('fade-slider-'+this.id).appendChild(prevButton);
 
 	slideshowButton = document.createElement('span');
 	slideshowButton.setAttribute('class','fade-slider-slideshow');
-	slideshowButton.setAttribute('style','color: #fff;position: absolute;left:41%;bottom:10px;padding: 5px;border: solid 1px; cursor:pointer;border-radius: 100px 100px 100px 100px;font-family:sans-serif');
-	buttonText = document.createTextNode('O Slider-show');
+	slideshowButton.setAttribute('style','color: #fff;position: absolute;left:47%;bottom:10px;padding: 5px;border: solid 1px; cursor:pointer;font-family:sans-serif;background-color:#000;opacity:0.5');
+	buttonText = document.createTextNode('Play');
 	buttonText.fontSize = 'bolder';
 	slideshowButton.appendChild(buttonText);
 	slideshowButton.addEventListener('click',function(){instance.startSlideShow()});
@@ -137,7 +140,7 @@ FadeSlider.prototype.fadeout = function(img,container){
 				opacity -= 0.1;
 				img.style.opacity = opacity;
 			}
-		},50);	
+		},this.options.transitionLength);	
 	}
 };
 
@@ -156,7 +159,7 @@ FadeSlider.prototype.fadein = function(img,container){
 				opacity += 0.1;
 				img.style.opacity = opacity;
 			}
-		},50);	
+		},this.options.transitionLength);	
 	}
 };
 
@@ -177,13 +180,20 @@ FadeSlider.prototype.fullScreen = function(imageIndex) {
 };
 
 FadeSlider.prototype.startSlideShow = function() {
-	var _nextImage = this.nextImage.bind(this);
-	clearInterval(this.timer);
-	this.timer = setInterval(_nextImage,this.delay);
+	var button = document.querySelector('#fade-slider-'+this.id+' .fade-slider-slideshow');
+	if (button.innerHTML == 'Play'){
+		var _nextImage = this.nextImage.bind(this);
+		clearInterval(this.timer);
+		this.timer = setInterval(_nextImage,this.options.delay);
+		document.querySelector('#fade-slider-'+this.id+' .fade-slider-slideshow').innerHTML = 'Stop';
+	}else{
+		this.stopSlideShow();
+	}
 }
 
 FadeSlider.prototype.stopSlideShow = function() {
 	clearInterval(this.timer);
+	document.querySelector('#fade-slider-'+this.id+' .fade-slider-slideshow').innerHTML = 'Play';
 }
 
 FadeSlider.prototype.nextImage = function() {
