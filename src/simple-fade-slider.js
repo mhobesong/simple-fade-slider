@@ -16,7 +16,20 @@ function FadeViewer(){
 
 	}
 
+	function loadImages(){
+		var container = document.createElement('div');
+		container.setAttribute('class', 'fadeviewer-images');
+		document.querySelectorAll('#'+args[0]+' li img').forEach(function(img){
+			var elem = new Image();
+			elem.src = img.src;
+
+			container.appendChild(elem);
+		});
+		document.getElementById(id).appendChild(container);
+	}
+
 	createRootContainer();
+	loadImages();
 
 	return {};
 }
