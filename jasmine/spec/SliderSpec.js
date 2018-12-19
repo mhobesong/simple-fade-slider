@@ -1,11 +1,10 @@
 var fadeViewer = null;
 describe("FadeViewer", function() {
 	beforeEach(function() {
-		fadeViewer = FadeViewer('list');
-	});
+		if (document.querySelector('.fadeviewer'))
+			document.querySelector('.fadeviewer').remove();
 
-	afterEach(function() {
-		document.querySelector('.fadeviewer').remove();
+		fadeViewer = FadeViewer('list');
 	});
 
 	it("should create fadeviewer container", function() {
@@ -14,7 +13,7 @@ describe("FadeViewer", function() {
 	});
 
 	it("should load images into a view container", function() {
-		var container = document.querySelectorAll('.fadeviewer .fadeviewer-images img');
-		expect(container.length).toEqual(4);
+		var images = document.querySelectorAll('.fadeviewer .fadeviewer-images img');
+		expect(images.length).toEqual(4);
 	});
 });

@@ -28,8 +28,24 @@ function FadeViewer(){
 		document.getElementById(id).appendChild(container);
 	}
 
+	function stackImages(){
+		var images = document.querySelectorAll('#'+id+' .fadeviewer-images img');
+
+		images.forEach(function(image){
+			image.style.position = 'absolute';
+			image.style.width = '100%';
+			image.style.height = '100%';
+		});
+
+		var container = document.querySelector('#'+id+' .fadeviewer-images');
+		container.style.position = 'relative';
+		container.style.width = '100vw';
+		container.style.height = '100vh';
+	}
+
 	createRootContainer();
 	loadImages();
+	stackImages();
 
 	return {};
 }
