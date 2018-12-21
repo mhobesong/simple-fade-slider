@@ -10,7 +10,7 @@ Load the script source into your project.
 ```
 ## API
 ```
-new FadeSlider(domElemID,[delay]);
+FadeViewer(domElemID,[delay]);
 ```
 `domElemID` *(String)* ID of list tag
 
@@ -29,7 +29,7 @@ new FadeSlider(domElemID,[delay]);
 ```
 #### JavaScript
 ```
-new FadeSlider('mySlider');
+FadeViewer('mySlider');
 ```
 ### Usage example 2
 #### HTML
@@ -43,5 +43,5 @@ new FadeSlider('mySlider');
 ```
 #### JavaScript
 ```
-new FadeSlider('mySlider',2000);
+FadeViewer('mySlider',2000);
 ```
