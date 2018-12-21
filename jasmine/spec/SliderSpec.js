@@ -5,8 +5,8 @@ describe("FadeViewer", function() {
 	});
 
 	afterEach(function() {
-		if (document.querySelector('.fadeviewer'))
-			document.querySelector('.fadeviewer').remove();
+		var images = document.querySelectorAll('.fadeviewer img');
+		document.querySelector('.fadeviewer').remove();
 	});
 
 	it("should create fadeviewer container", function() {
