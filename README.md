@@ -1,5 +1,7 @@
 # simple-fade-slider
-JavaScript image slider with image fade-in/fade-out transition effect, next/previous buttons, sliders looping and full screen viewer.
+JavaScript image viewer with image fade-in/fade-out transition effect.
+
+![demo gif](https://github.com/mhobesong/simple-fade-slider/blob/master/src/images/demo.gif?raw=true)
 
 ## Install
 Load the script source into your project.
