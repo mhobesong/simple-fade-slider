@@ -10,7 +10,7 @@ Load the script source into your project.
 ```
 ## API
 ```
-new FadeSlider(domElemID,[options]);
+new FadeSlider(domElemID,[delay]);
 ```
 `domElemID` *(String)* ID of list tag
 
