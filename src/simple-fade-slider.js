@@ -201,6 +201,15 @@ function FadeViewer(){
 		}
 	}
 
+	function stopPlayer(){
+		var playBtn = document.querySelector('#'+id+' .fadeviewer-play');
+		if (timer){
+			clearInterval(timer);
+			playBtn.innerHTML = 'Play';
+			timer = null;
+		}
+	}
+
 	function prev(){
 		var images = document.querySelectorAll('#'+id+' .fadeviewer-images .fadeviewer-image');
 		
@@ -213,6 +222,7 @@ function FadeViewer(){
 	}
 
 	function openFullScreen(){
+		stopPlayer();
 		show(parseInt(this.getAttribute('fadeviewer-image-index')));
 		var elem = document.getElementById(id);
 		if (elem.requestFullscreen) {
